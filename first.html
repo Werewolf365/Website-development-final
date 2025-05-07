@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CozyCraft by Zahara.K | Luxury Crochet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F7F5EB;
+      --dusty-rose: #D4B2A7;
+      --sage: #A8C3B0;
+      --taupe: #6E5F5A;
+    }
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--cream);
+      color: var(--taupe);
+    }
+    .ribbon-header {
+      background: var(--dusty-rose);
+      color: white;
+      padding: 1rem 0;
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: 0.1em;
+      border-bottom: 3px solid var(--taupe);
+    }
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(247, 245, 235, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(110, 95, 90, 0.1);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      color: var(--taupe);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--taupe);
+      font-weight: 500;
+      transition: color 0.2s;
+      font-size: 1.1rem;
+    }
+    .nav-links a:hover {
+      color: var(--sage);
+    }
+    .hero {
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(120deg, #f7f5eb 70%, #d4b2a7 100%);
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      color: var(--taupe);
+    }
+    .hero p {
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+    }
+    .cta-button {
+      background: var(--sage);
+      color: white;
+      border: none;
+      padding: 0.8rem 2.2rem;
+      font-size: 1.1rem;
+      border-radius: 25px;
+      font-family: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      box-shadow: 0 2px 10px 0 #a8c3b033;
+      margin-top: 1rem;
+    }
+    .cta-button:hover {
+      background: var(--dusty-rose);
+    }
+    .section-header {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.3rem;
+      color: var(--taupe);
+      margin-bottom: 2rem;
+      position: relative;
+      display: inline-block;
+    }
+    .section-header::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 2px;
+      background: var(--sage);
+    }
+    .catalog-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .catalog-tabs button {
+      background: none;
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      color: var(--taupe);
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0.5rem 1.5rem;
+      border-radius: 20px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .catalog-tabs button.active,
+    .catalog-tabs button:hover {
+      background: var(--sage);
+      color: white;
+    }
+    .catalog-section {
+      display: none;
+      animation: fadeIn 0.7s;
+    }
+    .catalog-section.active {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      padding: 2rem 5%;
+      max-width: 1440px;
+      margin: 0 auto 3rem auto;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .product-card {
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 4px 18px 0 #a8c3b033;
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    .product-card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 8px 24px 0 #d4b2a744;
+    }
+    .product-image, .product-video {
+      width: 100%;
+      max-width: 100%;
+      height: 320px;
+      object-fit: cover;
+      border-bottom: 1px solid #eee;
+      background: #eee;
+      display: block;
+    }
+    .product-info {
+      padding: 1rem 1.2rem;
+      text-align: center;
+    }
+    .product-info h3 {
+      margin: 0.3rem 0 0.2rem 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      color: var(--taupe);
+    }
+    .product-info p {
+      margin: 0;
+      font-size: 1rem;
+      color: #867070;
+    }
+    /* About and Contact */
+    .about-section, .contact-section {
+      max-width: 800px;
+      margin: 3rem auto 4rem auto;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 18px 0 #a8c3b033;
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    .about-section h2, .contact-section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      margin-bottom: 1.2rem;
+      color: var(--taupe);
+    }
+    .about-section p {
+      font-size: 1.15rem;
+      color: #867070;
+      margin-bottom: 1.5rem;
+    }
+    .about-section img {
+      width: 110px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+      border: 3px solid var(--sage);
+    }
+    .contact-section input, .contact-section textarea {
+      width: 90%;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      border: 1.5px solid var(--sage);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      resize: vertical;
+    }
+    .contact-section button {
+      margin-top: 1rem;
+    }
+    .footer {
+      background: var(--taupe);
+      color: white;
+      text-align: center;
+      padding: 1.5rem 0 1rem 0;
+      font-size: 1rem;
+      letter-spacing: 0.03em;
+    }
+    @media (max-width: 900px) {
+      .catalog-section.active {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 600px) {
+      .catalog-section.active {
+        grid-template-columns: 1fr;
+        padding: 1rem 2vw;
+      }
+      .hero h1 {
+        font-size: 2.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="ribbon-header">
+    Handcrafted with Love • Worldwide Shipping • Eco-Friendly Materials
+  </div>
+  <nav>
+    <a href="#" class="nav-logo">CozyCraft</a>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#catalog">Catalog</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="https://www.instagram.com/cozycraft_by_zahara.k/" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </nav>
+
+  <section class="hero" id="home">
+    <h1>CozyCraft by Zahara.K</h1>
+    <p>Luxury, hand-crocheted bags, accessories, florals, plushies & more.<br>Inspired by tradition, crafted for today.</p>
+    <a href="#catalog" class="cta-button">Browse Catalog</a>
+  </section>
+
+  <section id="catalog">
+    <div class="section-header"><center>Our Collections</center></div>
+    <div class="catalog-tabs">
+      <button class="active" data-tab="bags">Bags & Totes</button>
+      <button data-tab="accessories">Accessories</button>
+      <button data-tab="florals">Flowers</button>
+      <button data-tab="plushies">Plushies & Keychains</button>
+    </div>
+    <!-- Bags & Totes -->
+    <div class="catalog-section active" id="bags">
+      <div class="product-card">
+        <img class="product-image" src="https://scontent.cdninstagram.com/v/t51.2885-15/429721888_1122334455667788_1234567890123456789_n.jpg?stp=dst-jpg_e35&_nc_ht=scontent.cdninstagram.com&_nc_cat=111&_nc_ohc=EXAMPLE1" alt="Crochet Tote Bag">
+        <div class="product-info">
+          <h3>Boho Market Tote</h3>
+          <p>Sturdy, stylish, and sustainable.</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <img class="product-image" src="https://scontent.cdninstagram.com/v/t51.2885-15/428721234_987654321012345_2345678901234567890_n.jpg?stp=dst-jpg_e35&_nc_ht=scontent.cdninstagram.com&_nc_cat=101&_nc_ohc=EXAMPLE2" alt="Crochet Mini Bag">
+        <div class="product-info">
+          <h3>Mini Pastel Bag</h3>
+          <p>Perfect for essentials and outings.</p>
+        </div>
+      </div>
+      <!-- Add more bags using Instagram images -->
+    </div>
+    <!-- Accessories -->
+    <div class="catalog-section" id="accessories">
+      <div class="product-card">
+        <img class="product-image" src="https://scontent.cdninstagram.com/v/t51.2885-15/427654321_123456789012345_3456789012345678901_n.jpg?stp=dst-jpg_e35&_nc_ht=scontent.cdninstagram.com&_nc_cat=109&_nc_ohc=EXAMPLE3" alt="Crochet Headband">
+        <div class="product-info">
+          <h3>Lace Trim Headband</h3>
+          <p>Soft, stretchy, and elegant.</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <!-- Reel snippet as video -->
+        <video class="product-video" src="https://scontent.cdninstagram.com/o1/v/t16/f1/m82/12345678_987654321234567_1234567890123456789_n.mp4?efg=eyJ2ZW5jb2RlX3RhZyI6InN2ZV9oZCJ9&_nc_ht=scontent.cdninstagram.com&_nc_cat=103&_nc_ohc=EXAMPLEREEL1" controls poster="https://s
+      <!-- Reel snippet as video -->
+      <video class="product-video" controls poster="https://scontent.cdninstagram.com/v/t51.2885-15/427654321_123456789012345_3456789012345678901_n.jpg?stp=dst-jpg_e35">
+        <source src="https://scontent.cdninstagram.com/o1/v/t16/f1/m82/12345678_987654321234567_1234567890123456789_n.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="product-info">
+        <h3>Chic Scrunchie</h3>
+        <p>Featured in our Instagram Reels!</p>
+      </div>
+    </div>
+    <!-- Add more accessories as needed -->
+  </div>
+  <!-- Florals -->
+  <div class="catalog-section" id="florals">
+    <div class="product-card">
+      <img class="product-image" src="https://scontent.cdninstagram.com/v/t51.2885-15/429876543_987654321012345_2345678901234567890_n.jpg?stp=dst-jpg_e35" alt="Crochet Flower Bouquet">
+      <div class="product-info">
+        <h3>Spring Bouquet</h3>
+        <p>Brighten any room with everlasting blooms.</p>
+      </div>
+    </div>
+    <div class="product-card">
+      <img class="product-image" src="https://scontent.cdninstagram.com/v/t51.2885-15/429765432_1122334455667788_1234567890123456789_n.jpg?stp=dst-jpg_e35" alt="Crochet Sunflower">
+      <div class="product-info">
+        <h3>Sunflower Stem</h3>
+        <p>Cheerful, vibrant, and maintenance-free.</p>
+      </div>
+    </div>
+    <!-- Add more floral products -->
+  </div>
+  <!-- Plushies & Keychains -->
+  <div class="catalog-section" id="plushies">
+    <div class="product-card">
+      <img class="product-image" src="https://scontent.cdninstagram.com/v/t51.2885-15/429123456_2233445566778899_9876543210987654321_n.jpg?stp=dst-jpg_e35" alt="Crochet Bunny Plushie">
+      <div class="product-info">
+        <h3>Bunny Plushie</h3>
+        <p>Soft, cuddly, and perfect for gifting.</p>
+      </div>
+    </div>
+    <div class="product-card">
+      <video class="product-video" controls poster="https://scontent.cdninstagram.com/v/t51.2885-15/429123456_2233445566778899_9876543210987654321_n.jpg?stp=dst-jpg_e35">
+        <source src="https://scontent.cdninstagram.com/o1/v/t16/f1/m82/23456789_987654321234567_1234567890123456789_n.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="product-info">
+        <h3>Keychain Reel</h3>
+        <p>See our adorable keychains in action!</p>
+      </div>
+    </div>
+    <!-- Add more plushies/keychains -->
+  </div>
+</section>
+
+<!-- About Section -->
+<section class="about-section" id="about">
+  <img src="https://scontent.cdninstagram.com/v/t51.2885-19/123456789_987654321234567_1234567890123456789_n.jpg?stp=dst-jpg_e35" alt="Zahara K">
+  <h2>Meet Zahara</h2>
+  <p>
+    Hi! I'm Zahara, the hands and heart behind CozyCraft.<br>
+    Every stitch is a story—of tradition, creativity, and love.<br>
+    I started CozyCraft to share the joy of crochet with the world.<br>
+    Thank you for supporting handmade!
+  </p>
+  <a href="https://www.instagram.com/cozycraft_by_zahara.k/" class="cta-button" target="_blank" rel="noopener">Follow on Instagram</a>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section" id="contact">
+  <h2>Contact & Custom Orders</h2>
+  <form onsubmit="event.preventDefault(); alert('Thank you for reaching out! Zahara will get back to you soon.'); this.reset();">
+    <input type="text" placeholder="Your Name" required>
+    <input type="email" placeholder="Your Email" required>
+    <textarea rows="4" placeholder="Tell us about your custom order or question..." required></textarea>
+    <button type="submit" class="cta-button">Send Message</button>
+  </form>
+  <p style="margin-top:1rem;">
+    Or DM us on <a href="https://www.instagram.com/cozycraft_by_zahara.k/" target="_blank" rel="noopener" style="color:var(--sage);font-weight:bold;">Instagram</a>
+  </p>
+</section>
+
+<div class="footer">
+  &copy; 2025 CozyCraft by Zahara.K &middot; Handmade with love in India
+</div>
+
+<script>
+  // Tabbed catalog navigation
+  const tabs = document.querySelectorAll('.catalog-tabs button');
+  const sections = document.querySelectorAll('.catalog-section');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      sections.forEach(sec => sec.classList.remove('active'));
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Smooth scroll for nav
+  document.querySelectorAll('.nav-links a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      document.querySelector(this.getAttribute('href')).scrollIntoView({behavior:'smooth'});
+    });
+  });
+</script>
+</body>
+</html>
